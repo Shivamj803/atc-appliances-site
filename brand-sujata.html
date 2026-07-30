@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sujata — Ajay Trading Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{ink:'#0C0C0E',inklight:'#141416',inksub:'#1C1C1F',warm:'#F5F0E8',warmdim:'#D4CFC7',muted:'#8A8A8E',gold:'#C9A84C',golddim:'#8B7340',success:'#4ADE80',danger:'#EF4444',brand:'#22C55E',brandlight:'rgba(34,197,94,0.15)'},fontFamily:{display:['Playfair Display','serif'],body:['Inter','sans-serif']},maxWidth:{lg:'448px'}}};
+</script>
+<style>
+*{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Inter',sans-serif;background:#0C0C0E;color:#F5F0E8;overflow-x:hidden;}
+.noise-overlay{position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.glass{background:rgba(20,20,22,0.85);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);border-bottom:1px solid rgba(245,240,232,0.06);}
+.hero-gradient{background:linear-gradient(180deg,rgba(12,12,14,0.3) 0%,rgba(12,12,14,0.85) 100%);}
+.brand-hero-sujata{background:linear-gradient(135deg,#0a1a0a 0%,#0C0C0E 40%,#1C1C1F 70%,#0a2a0a 100%);}
+.gold-line{width:40px;height:2px;background:linear-gradient(90deg,#C9A84C,#8B7340);}
+.card-hover{transition:transform 0.3s cubic-bezier(0.4,0,0.2,1),box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);}
+.card-hover:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4);}
+.filter-pill{transition:all 0.25s ease;white-space:nowrap;}
+.filter-pill.active{background:#C9A84C;color:#0C0C0E;font-weight:600;}
+.pill{transition:all 0.2s ease;cursor:pointer;}
+.pill.active{background:#22C55E;color:#fff;border-color:#22C55E;}
+.product-card{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.product-card.visible{opacity:1;transform:translateY(0);}
+.compare-bar{transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);}
+.compare-bar.show{transform:translateY(0);}
+.modal{opacity:0;pointer-events:none;transition:opacity 0.3s ease;}
+.modal.open{opacity:1;pointer-events:auto;}
+.modal-content{transform:scale(0.95) translateY(20px);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);}
+.modal.open .modal-content{transform:scale(1) translateY(0);}
+.pill-scroll::-webkit-scrollbar{display:none;}
+.pill-scroll{-ms-overflow-style:none;scrollbar-width:none;}
+.scroll-reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.scroll-reveal.visible{opacity:1;transform:translateY(0);}
+.parallax-img{will-change:transform;transition:transform 0.1s linear;}
+.tech-card{transition:all 0.3s ease;}
+.tech-card:hover{transform:translateY(-4px);border-color:rgba(201,168,76,0.3);}
+.badge-shimmer{background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);background-size:200% 100%;animation:shimmer 2.5s infinite;}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.float-anim{animation:float 3s ease-in-out infinite;}
+.whatsapp-btn{box-shadow:0 4px 20px rgba(34,197,94,0.4);transition:all 0.3s ease;}
+.whatsapp-btn:hover{box-shadow:0 6px 28px rgba(34,197,94,0.55);transform:scale(1.05);}
+.nav-item{position:relative;}
+.nav-item.active::after{content:'';position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#C9A84C;}
+input[type="checkbox"]{accent-color:#C9A84C;width:16px;height:16px;cursor:pointer;}
+.sort-select{background:#1C1C1F;border:1px solid rgba(245,240,232,0.1);color:#F5F0E8;padding:6px 10px;border-radius:6px;font-size:13px;outline:none;}
+</style>
+</head>
+<body class="min-h-screen relative">
+<div class="noise-overlay"></div>
+
+<!-- HEADER -->
+<header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 glass transition-all duration-300">
+<div class="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-3 text-warm hover:text-gold transition-colors">
+<span class="material-symbols-outlined text-xl">arrow_back</span>
+</a>
+<a href="index.html" class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-gold flex items-center justify-center">
+<span class="text-ink font-bold text-xs">ATC</span>
+</div>
+<span class="font-display text-sm font-semibold tracking-wide text-warm">Ajay Trading Co.</span>
+</a>
+<div class="flex items-center gap-3">
+<button class="text-warm hover:text-gold transition-colors p-1" aria-label="Search">
+<span class="material-symbols-outlined text-xl">search</span>
+</button>
+<a href="cart.html" class="relative text-warm hover:text-gold transition-colors p-1" aria-label="Cart">
+<span class="material-symbols-outlined text-xl">shopping_cart</span>
+<span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-brand text-white text-[10px] font-bold rounded-full flex items-center justify-center">2</span>
+</a>
+</div>
+</div>
+</header>
+
+<main class="max-w-lg mx-auto pt-14">
+
+<!-- HERO -->
+<section id="hero" class="brand-hero-sujata relative min-h-[480px] flex flex-col justify-end overflow-hidden">
+<img id="heroImg" src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&q=80" alt="Sujata kitchen appliances" class="parallax-img absolute inset-0 w-full h-full object-cover opacity-40">
+<div class="hero-gradient absolute inset-0"></div>
+<div class="relative z-10 px-5 pb-8 pt-24">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brandlight border border-brand/20 mb-4">
+<div class="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></div>
+<span class="text-xs font-medium text-brand">Authorized Partner</span>
+</div>
+<h1 class="font-display text-[32px] leading-tight font-semibold text-warm mb-3">India's kitchen<br><span class="text-gold">companion since 1980.</span></h1>
+<p class="text-muted text-sm leading-relaxed max-w-xs mb-5">Sujata mixer grinders, juicers & choppers — unbeatable power, unbreakable durability, unbeatable value.</p>
+<div class="flex items-center gap-2">
+<a href="#products" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-ink font-semibold text-sm rounded-lg hover:bg-warm transition-colors">
+<span>Explore Products</span>
+<span class="material-symbols-outlined text-base">arrow_downward</span>
+</a>
+<a href="tel:+919710158619" class="inline-flex items-center gap-2 px-4 py-2.5 border border-warm/20 text-warm text-sm rounded-lg hover:border-gold hover:text-gold transition-colors">
+<span class="material-symbols-outlined text-base">phone</span>
+<span>Call Now</span>
+</a>
+</div>
+</div>
+</section>
+
+<!-- BRAND STORY -->
+<section class="px-5 py-10 scroll-reveal">
+<div class="gold-line mb-4"></div>
+<h2 class="font-display text-2xl font-semibold text-warm mb-3">Four Decades of Trust</h2>
+<p class="text-muted text-sm leading-relaxed mb-6">For over four decades, Sujata has been the trusted name in Indian kitchens. From the robust 900W mixer grinder to the efficient juicer, every Sujata product is built to withstand the demands of daily Indian cooking — dal, masala, chutney, and more.</p>
+<div class="grid grid-cols-3 gap-3">
+<div class="bg-inklight rounded-xl p-4 text-center border border-warm/5">
+<div class="font-display text-2xl font-semibold text-gold mb-1">40+</div>
+<div class="text-xs text-muted">Years</div>
+</div>
+<div class="bg-inklight rounded-xl p-4 text-center border border-warm/5">
+<div class="font-display text-2xl font-semibold text-gold mb-1">1L+</div>
+<div class="text-xs text-muted">Homes</div>
+</div>
+<div class="bg-inklight rounded-xl p-4 text-center border border-warm/5">
+<div class="font-display text-2xl font-semibold text-gold mb-1">4.6<span class="text-sm">★</span></div>
+<div class="text-xs text-muted">Rating</div>
+</div>
+</div>
+</section>
+
+<!-- TECH HIGHLIGHTS -->
+<section class="px-5 pb-8 scroll-reveal">
+<h3 class="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Built for Indian Kitchens</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="tech-card bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-brand">bolt</span>
+</div>
+<h4 class="text-sm font-semibold text-warm mb-1">900W Heavy-Duty Motor</h4>
+<p class="text-xs text-muted leading-relaxed">Grinds toughest masalas in seconds</p>
+</div>
+<div class="tech-card bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-brand">settings_backup_restore</span>
+</div>
+<h4 class="text-sm font-semibold text-warm mb-1">Double Ball Bearing</h4>
+<p class="text-xs text-muted leading-relaxed">2x lifespan, less noise</p>
+</div>
+<div class="tech-card bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-brand">layers</span>
+</div>
+<h4 class="text-sm font-semibold text-warm mb-1">Unbreakable Jars</h4>
+<p class="text-xs text-muted leading-relaxed">Polycarbonate & stainless steel</p>
+</div>
+<div class="tech-card bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-brand">shield</span>
+</div>
+<h4 class="text-sm font-semibold text-warm mb-1">Shock-Proof Body</h4>
+<p class="text-xs text-muted leading-relaxed">Safety-first design</p>
+</div>
+</div>
+</section>
+
+<!-- CATEGORY FILTER PILLS -->
+<section id="products" class="px-5 pb-4">
+<h3 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Filter by Category</h3>
+<div class="pill-scroll flex gap-2 overflow-x-auto pb-2" id="categoryPills">
+<button class="filter-pill active px-4 py-2 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warm" data-category="all">All</button>
+<button class="filter-pill px-4 py-2 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-category="mixer">Mixer Grinders</button>
+<button class="filter-pill px-4 py-2 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-category="juicers">Juicers</button>
+<button class="filter-pill px-4 py-2 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-category="choppers">Choppers</button>
+<button class="filter-pill px-4 py-2 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-category="wetgrinders">Wet Grinders</button>
+</div>
+</section>
+
+<!-- PRICE RANGE FILTER -->
+<section class="px-5 pb-4">
+<h3 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Price Range</h3>
+<div class="flex gap-2 flex-wrap" id="pricePills">
+<button class="pill px-3 py-1.5 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-range="all">All Prices</button>
+<button class="pill px-3 py-1.5 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-range="under30">Under ₹30K</button>
+<button class="pill px-3 py-1.5 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-range="30to50">₹30K – ₹50K</button>
+<button class="pill px-3 py-1.5 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-range="50to1l">₹50K – ₹1L</button>
+<button class="pill px-3 py-1.5 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-range="above1l">Above ₹1L</button>
+</div>
+</section>
+
+<!-- STICKY FILTER/SORT BAR -->
+<div id="stickyBar" class="sticky top-14 z-40 bg-ink/95 backdrop-blur-md border-y border-warm/5 px-5 py-3 flex items-center justify-between">
+<div class="text-xs text-muted"><span class="text-warm font-medium" id="productCount">8</span> products</div>
+<select id="sortSelect" class="sort-select text-xs">
+<option value="featured">Featured</option>
+<option value="price-low">Price: Low to High</option>
+<option value="price-high">Price: High to Low</option>
+<option value="discount">Biggest Discount</option>
+</select>
+</div>
+
+<!-- PRODUCT GRID -->
+<section class="px-5 py-5">
+<div class="grid grid-cols-2 gap-3" id="productGrid">
+
+<!-- Product 1 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="mixer" data-price="5490" data-discount="31">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=400&q=80" alt="Sujata Dynamix" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">31% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Mixer Grinder</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Sujata Dynamix 900W Mixer</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹5,490</span>
+<span class="text-[10px] text-muted line-through">₹7,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹458/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="1" data-name="Sujata Dynamix 900W Mixer" data-price="5490" data-category="mixer" data-img="https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="juicers" data-price="4290" data-discount="32">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&q=80" alt="Sujata Powermatic" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">32% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Juicer</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Sujata Powermatic 810W Juicer</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹4,290</span>
+<span class="text-[10px] text-muted line-through">₹6,290</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹358/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="2" data-name="Sujata Powermatic 810W Juicer" data-price="4290" data-category="juicers" data-img="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 3 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="mixer" data-price="4990" data-discount="33">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=400&q=80" alt="Sujata SuperMix" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">33% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Mixer Grinder</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Sujata SuperMix 900W 3 Jar</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹4,990</span>
+<span class="text-[10px] text-muted line-through">₹7,490</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹416/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="3" data-name="Sujata SuperMix 900W 3 Jar" data-price="4990" data-category="mixer" data-img="https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 4 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="juicers" data-price="6490" data-discount="32">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&q=80" alt="Sujata Megaflow" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">32% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Juicer-Mixer</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Sujata Megaflow 900W Juicer-Mixer</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹6,490</span>
+<span class="text-[10px] text-muted line-through">₹9,490</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹541/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="4" data-name="Sujata Megaflow 900W Juicer-Mixer" data-price="6490" data-category="juicers" data-img="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 5 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="choppers" data-price="2490" data-discount="38">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1594385208974-2e75f8d7bb48?w=400&q=80" alt="Sujata Chopping Plus" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">38% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Chopper</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Sujata Chopping Plus 400W</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹2,490</span>
+<span class="text-[10px] text-muted line-through">₹3,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹208/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="5" data-name="Sujata Chopping Plus 400W" data-price="2490" data-category="choppers" data-img="https://images.unsplash.com/photo-1594385208974-2e75f8d7bb48?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 6 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="mixer" data-price="3990" data-discount="33">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=400&q=80" alt="Sujata Multimix" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">33% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Mixer Grinder</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Sujata Multimix 750W 2 Jar</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹3,990</span>
+<span class="text-[10px] text-muted line-through">₹5,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹333/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="6" data-name="Sujata Multimix 750W 2 Jar" data-price="3990" data-category="mixer" data-img="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 7 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="wetgrinders" data-price="7990" data-discount="33">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=400&q=80" alt="Sujata Wet Grinder" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">33% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Wet Grinder</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Sujata Wet Grinder 2L</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹7,990</span>
+<span class="text-[10px] text-muted line-through">₹11,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹666/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="7" data-name="Sujata Wet Grinder 2L" data-price="7990" data-category="wetgrinders" data-img="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 8 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="mixer" data-price="6990" data-discount="30">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=400&q=80" alt="Sujata SuperMix Pro" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">30% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Mixer Grinder</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Sujata SuperMix Pro 1000W</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹6,990</span>
+<span class="text-[10px] text-muted line-through">₹9,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹583/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="8" data-name="Sujata SuperMix Pro 1000W" data-price="6990" data-category="mixer" data-img="https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+</div>
+<div id="noResults" class="hidden text-center py-12">
+<span class="material-symbols-outlined text-4xl text-muted mb-3">search_off</span>
+<p class="text-sm text-muted">No products match your filters.</p>
+<button onclick="resetFilters()" class="mt-3 text-xs text-gold underline">Reset filters</button>
+</div>
+</section>
+
+<!-- PERSONALIZED HELP -->
+<section class="px-5 py-6 scroll-reveal">
+<div class="bg-gradient-to-br from-brand/10 to-inksub rounded-2xl p-5 border border-brand/10">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-brand/15 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-brand text-2xl">chat</span>
+</div>
+<div>
+<h3 class="font-display text-lg font-semibold text-warm mb-1">Not sure which one?</h3>
+<p class="text-xs text-muted leading-relaxed mb-3">Our experts will help you pick the perfect Sujata mixer grinder or juicer for your kitchen needs.</p>
+<a href="https://wa.me/919710158619" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-success text-ink font-semibold text-xs rounded-lg hover:bg-success/90 transition-colors">
+<span class="material-symbols-outlined text-sm">chat</span>
+<span>Chat on WhatsApp</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- TRUST SECTION -->
+<section class="px-5 py-8 scroll-reveal">
+<h3 class="font-display text-xl font-semibold text-warm mb-5 text-center">The ATC Difference</h3>
+<div class="space-y-3">
+<div class="flex items-start gap-4 bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-gold">verified</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-warm mb-1">Authorized Dealer</h4>
+<p class="text-xs text-muted leading-relaxed">Genuine Sujata products with full manufacturer warranty and GST invoice.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-gold">local_shipping</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-warm mb-1">Free Delivery</h4>
+<p class="text-xs text-muted leading-relaxed">Fast delivery across Delhi NCR with safe packaging and doorstep service.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-gold">support_agent</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-warm mb-1">Lifetime Support</h4>
+<p class="text-xs text-muted leading-relaxed">Spare parts, servicing, and expert advice available even after warranty.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="px-5 py-8 border-t border-warm/5">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-8 h-8 rounded-full bg-gold flex items-center justify-center">
+<span class="text-ink font-bold text-xs">ATC</span>
+</div>
+<span class="font-display text-sm font-semibold tracking-wide text-warm">Ajay Trading Co.</span>
+</div>
+<p class="text-[11px] text-muted leading-relaxed mb-3">Premium home appliances retailer in Delhi NCR since 1995. Authorised dealer for Sujata, LG, Daikin, Voltas, Hitachi & more.</p>
+<div class="text-[10px] text-muted/60 border-t border-warm/5 pt-3">
+© 2024 Ajay Trading Co. All rights reserved.<br>
+Sujata is a registered trademark of Sujata Appliances Pvt. Ltd. This is an independent authorized dealer page.
+</div>
+</footer>
+
+<!-- Spacer for bottom nav -->
+<div class="h-20"></div>
+</main>
+
+<!-- COMPARE FLOATING BAR -->
+<div id="compareBar" class="compare-bar fixed bottom-20 left-0 right-0 z-50 px-4">
+<div class="max-w-lg mx-auto bg-inklight border border-gold/20 rounded-xl p-3 shadow-2xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2" id="compareThumbs"></div>
+<span class="text-xs text-muted"><span id="compareCount" class="text-warm font-semibold">0</span>/4 selected</span>
+</div>
+<div class="flex items-center gap-2">
+<button onclick="clearCompare()" class="text-[11px] text-muted hover:text-warm transition-colors px-2 py-1">Clear</button>
+<button onclick="openCompareModal()" class="px-4 py-2 bg-gold text-ink text-xs font-semibold rounded-lg hover:bg-warm transition-colors">Compare</button>
+</div>
+</div>
+</div>
+
+<!-- COMPARE MODAL -->
+<div id="compareModal" class="modal fixed inset-0 z-[60] flex items-end justify-center">
+<div class="absolute inset-0 bg-ink/90 backdrop-blur-sm" onclick="closeCompareModal()"></div>
+<div class="modal-content relative bg-inklight w-full max-w-lg rounded-t-2xl border-t border-gold/20 max-h-[85vh] overflow-auto">
+<div class="sticky top-0 bg-inklight z-10 px-5 py-4 border-b border-warm/5 flex items-center justify-between">
+<h3 class="font-display text-lg font-semibold text-warm">Compare Products</h3>
+<button onclick="closeCompareModal()" class="text-muted hover:text-warm">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div id="compareBody" class="p-5 overflow-x-auto">
+<table class="w-full text-xs">
+<thead><tr id="compareHead"></tr></thead>
+<tbody id="compareRows"></tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-inklight/95 backdrop-blur-xl border-t border-warm/5">
+<div class="max-w-lg mx-auto h-16 flex items-center justify-around px-2">
+<a href="index.html" class="nav-item flex flex-col items-center gap-0.5 p-2 text-muted hover:text-warm transition-colors">
+<span class="material-symbols-outlined text-xl">home</span>
+<span class="text-[10px]">Home</span>
+</a>
+<a href="brand.html" class="nav-item active flex flex-col items-center gap-0.5 p-2 text-gold">
+<span class="material-symbols-outlined text-xl">apartment</span>
+<span class="text-[10px]">Brands</span>
+</a>
+<a href="https://wa.me/919710158619" target="_blank" class="whatsapp-btn -mt-5 w-12 h-12 rounded-full bg-success flex items-center justify-center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.6 6.3A7.5 7.5 0 0 0 12 4a7.5 7.5 0 0 0-6.3 11.6L4 20l4.5-1.2A7.5 7.5 0 0 0 20 12a7.5 7.5 0 0 0-2.4-5.7zM12 17.5c-3 0-5.5-2.5-5.5-5.5S9 6.5 12 6.5s5.5 2.5 5.5 5.5-2.5 5.5-5.5 5.5z"/></svg>
+</a>
+<a href="cart.html" class="nav-item flex flex-col items-center gap-0.5 p-2 text-muted hover:text-warm transition-colors relative">
+<span class="material-symbols-outlined text-xl">shopping_cart</span>
+<span class="text-[10px]">Cart</span>
+<span class="absolute top-1 right-1 w-3 h-3 bg-brand rounded-full"></span>
+</a>
+<a href="account.html" class="nav-item flex flex-col items-center gap-0.5 p-2 text-muted hover:text-warm transition-colors">
+<span class="material-symbols-outlined text-xl">person</span>
+<span class="text-[10px]">Account</span>
+</a>
+</div>
+</nav>
+
+<script>
+// ===== STATE =====
+let activeCategory='all', activePrice='all', activeSort='featured';
+let compareList=[];
+
+// ===== HEADER SHADOW =====
+const header=document.getElementById('mainHeader');
+window.addEventListener('scroll',()=>{header.classList.toggle('shadow-lg',window.scrollY>20);},{passive:true});
+
+// ===== PARALLAX =====
+const heroImg=document.getElementById('heroImg');
+window.addEventListener('scroll',()=>{if(heroImg){heroImg.style.transform=`translateY(${window.scrollY*0.25}px)`;}},{passive:true});
+
+// ===== SCROLL REVEAL =====
+const revealEls=document.querySelectorAll('.scroll-reveal');
+const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:0.12});
+revealEls.forEach(el=>revealObs.observe(el));
+
+// ===== CATEGORY FILTER =====
+document.getElementById('categoryPills').addEventListener('click',e=>{
+const btn=e.target.closest('.filter-pill');if(!btn)return;
+document.querySelectorAll('#categoryPills .filter-pill').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');activeCategory=btn.dataset.category;applyFilters();
+});
+
+// ===== PRICE FILTER =====
+document.getElementById('pricePills').addEventListener('click',e=>{
+const btn=e.target.closest('.pill');if(!btn)return;
+document.querySelectorAll('#pricePills .pill').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');activePrice=btn.dataset.range;applyFilters();
+});
+
+// ===== SORT =====
+document.getElementById('sortSelect').addEventListener('change',e=>{activeSort=e.target.value;applyFilters();});
+
+function applyFilters(){
+const cards=Array.from(document.querySelectorAll('#productGrid .product-card'));
+let visible=0;
+cards.forEach(card=>{
+const cat=card.dataset.category;
+const price=parseInt(card.dataset.price);
+let showCat=activeCategory==='all'||cat===activeCategory;
+let showPrice=true;
+if(activePrice==='under30')showPrice=price<30000;
+else if(activePrice==='30to50')showPrice=price>=30000&&price<50000;
+else if(activePrice==='50to1l')showPrice=price>=50000&&price<=100000;
+else if(activePrice==='above1l')showPrice=price>100000;
+if(showCat&&showPrice){card.classList.remove('hidden');card.classList.add('visible');visible++;}else{card.classList.add('hidden');card.classList.remove('visible');}
+});
+const grid=document.getElementById('productGrid');
+const visibleCards=cards.filter(c=>!c.classList.contains('hidden'));
+if(activeSort==='price-low')visibleCards.sort((a,b)=>parseInt(a.dataset.price)-parseInt(b.dataset.price));
+else if(activeSort==='price-high')visibleCards.sort((a,b)=>parseInt(b.dataset.price)-parseInt(a.dataset.price));
+else if(activeSort==='discount')visibleCards.sort((a,b)=>parseInt(b.dataset.discount)-parseInt(a.dataset.discount));
+visibleCards.forEach(c=>grid.appendChild(c));
+document.getElementById('productCount').textContent=visible;
+document.getElementById('noResults').classList.toggle('hidden',visible>0);
+}
+
+function resetFilters(){
+activeCategory='all';activePrice='all';activeSort='featured';
+document.querySelectorAll('#categoryPills .filter-pill').forEach(b=>b.classList.toggle('active',b.dataset.category==='all'));
+document.querySelectorAll('#pricePills .pill').forEach(b=>b.classList.toggle('active',b.dataset.range==='all'));
+document.getElementById('sortSelect').value='featured';
+applyFilters();
+}
+
+// ===== COMPARE =====
+document.getElementById('productGrid').addEventListener('change',e=>{
+if(!e.target.classList.contains('compare-check'))return;
+const cb=e.target;
+const item={id:cb.dataset.id,name:cb.dataset.name,price:cb.dataset.price,category:cb.dataset.category,img:cb.dataset.img};
+if(cb.checked){if(compareList.length>=4){cb.checked=false;alert('Compare up to 4 products only.');return;}compareList.push(item);}
+else{compareList=compareList.filter(x=>x.id!==item.id);}
+updateCompareBar();
+});
+
+function updateCompareBar(){
+const bar=document.getElementById('compareBar');
+const thumbs=document.getElementById('compareThumbs');
+const count=document.getElementById('compareCount');
+count.textContent=compareList.length;
+thumbs.innerHTML=compareList.map((x,i)=>`<img src="${x.img}" class="w-8 h-8 rounded-full object-cover border-2 border-inklight" style="z-index:${10-i}">`).join('');
+bar.classList.toggle('show',compareList.length>0);
+}
+
+function clearCompare(){
+compareList=[];
+document.querySelectorAll('.compare-check').forEach(cb=>cb.checked=false);
+updateCompareBar();
+}
+
+function openCompareModal(){
+const modal=document.getElementById('compareModal');
+const head=document.getElementById('compareHead');
+const rows=document.getElementById('compareRows');
+head.innerHTML='<th class="text-left text-muted pb-3 font-normal">Feature</th>'+compareList.map(x=>`<th class="pb-3 text-center font-medium text-warm"><img src="${x.img}" class="w-16 h-16 object-cover rounded-lg mx-auto mb-2"><div class="text-[11px] leading-tight">${x.name}</div></th>`).join('');
+const cats=compareList.map(x=>x.category==='mixer'?'Mixer Grinder':x.category==='juicers'?'Juicer':x.category==='choppers'?'Chopper':x.category==='wetgrinders'?'Wet Grinder':'Appliance');
+const features=[
+['Category',...cats],
+['Price',...compareList.map(x=>'<span class="text-gold font-semibold">₹'+parseInt(x.price).toLocaleString('en-IN')+'</span>')],
+['Warranty',['2 Years','2 Years','2 Years','2 Years','2 Years','2 Years','2 Years','2 Years'].slice(0,compareList.length)],
+['Motor Power',['900W','810W','900W','900W','400W','750W','150W','1000W'].slice(0,compareList.length)),
+['EMI Available',['Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes'].slice(0,compareList.length))
+];
+rows.innerHTML=features.map(f=>`<tr class="border-t border-warm/5"><td class="py-3 text-muted">${f[0]}</td>${f.slice(1).map(v=>`<td class="py-3 text-center text-warm">${v}</td>`).join('')}</tr>`).join('')+'<tr class="border-t border-warm/5"><td class="py-3"></td>'+compareList.map(()=>`<td class="py-3 text-center"><button class="px-3 py-1.5 bg-gold text-ink text-[10px] font-semibold rounded">Buy Now</button></td>`).join('')+'</tr>';
+modal.classList.add('open');
+document.body.style.overflow='hidden';
+}
+
+function closeCompareModal(){
+const modal=document.getElementById('compareModal');
+modal.classList.remove('open');
+document.body.style.overflow='';
+}
+
+// ===== STICKY BAR OBSERVER =====
+const stickyBar=document.getElementById('stickyBar');
+const prodSection=document.getElementById('products');
+if(stickyBar&&prodSection){
+const stickyObs=new IntersectionObserver(([entry])=>{stickyBar.style.boxShadow=entry.boundingClientRect.top<60?'0 4px 20px rgba(0,0,0,0.3)':'none';},{threshold:[0]});
+stickyObs.observe(prodSection);
+}
+</script>
+</body>
+</html>
