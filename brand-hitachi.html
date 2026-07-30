@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Hitachi — Ajay Trading Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{ink:'#0C0C0E',inklight:'#141416',inksub:'#1C1C1F',warm:'#F5F0E8',warmdim:'#D4CFC7',muted:'#8A8A8E',gold:'#C9A84C',golddim:'#8B7340',success:'#4ADE80',danger:'#EF4444',brand:'#DC2626',brandlight:'rgba(220,38,38,0.15)'},fontFamily:{display:['Playfair Display','serif'],body:['Inter','sans-serif']},maxWidth:{lg:'448px'}}}}};
+</script>
+<style>
+*{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Inter',sans-serif;background:#0C0C0E;color:#F5F0E8;overflow-x:hidden;}
+.noise-overlay{position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.glass{background:rgba(20,20,22,0.85);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);border-bottom:1px solid rgba(245,240,232,0.06);}
+.hero-gradient{background:linear-gradient(180deg,rgba(12,12,14,0.3) 0%,rgba(12,12,14,0.85) 100%);}
+.brand-hero-hitachi{background:linear-gradient(135deg,#1a0a0a 0%,#0C0C0E 40%,#1C1C1F 70%,#2a0a0a 100%);}
+.gold-line{width:40px;height:2px;background:linear-gradient(90deg,#C9A84C,#8B7340);}
+.card-hover{transition:transform 0.3s cubic-bezier(0.4,0,0.2,1),box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);}
+.card-hover:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4);}
+.filter-pill{transition:all 0.25s ease;white-space:nowrap;}
+.filter-pill.active{background:#C9A84C;color:#0C0C0E;font-weight:600;}
+.pill{transition:all 0.2s ease;cursor:pointer;}
+.pill.active{background:#DC2626;color:#fff;border-color:#DC2626;}
+.product-card{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.product-card.visible{opacity:1;transform:translateY(0);}
+.compare-bar{transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);}
+.compare-bar.show{transform:translateY(0);}
+.modal{opacity:0;pointer-events:none;transition:opacity 0.3s ease;}
+.modal.open{opacity:1;pointer-events:auto;}
+.modal-content{transform:scale(0.95) translateY(20px);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);}
+.modal.open .modal-content{transform:scale(1) translateY(0);}
+.pill-scroll::-webkit-scrollbar{display:none;}
+.pill-scroll{-ms-overflow-style:none;scrollbar-width:none;}
+.scroll-reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.scroll-reveal.visible{opacity:1;transform:translateY(0);}
+.parallax-img{will-change:transform;transition:transform 0.1s linear;}
+.tech-card{transition:all 0.3s ease;}
+.tech-card:hover{transform:translateY(-4px);border-color:rgba(201,168,76,0.3);}
+.badge-shimmer{background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);background-size:200% 100%;animation:shimmer 2.5s infinite;}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.float-anim{animation:float 3s ease-in-out infinite;}
+.whatsapp-btn{box-shadow:0 4px 20px rgba(34,197,94,0.4);transition:all 0.3s ease;}
+.whatsapp-btn:hover{box-shadow:0 6px 28px rgba(34,197,94,0.55);transform:scale(1.05);}
+.nav-item{position:relative;}
+.nav-item.active::after{content:'';position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#C9A84C;}
+input[type="checkbox"]{accent-color:#C9A84C;width:16px;height:16px;cursor:pointer;}
+.sort-select{background:#1C1C1F;border:1px solid rgba(245,240,232,0.1);color:#F5F0E8;padding:6px 10px;border-radius:6px;font-size:13px;outline:none;}
+</style>
+</head>
+<body class="min-h-screen relative">
+<div class="noise-overlay"></div>
+
+<!-- HEADER -->
+<header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 glass transition-all duration-300">
+<div class="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
+<a href="index.html" class="flex items-center gap-3 text-warm hover:text-gold transition-colors">
+<span class="material-symbols-outlined text-xl">arrow_back</span>
+</a>
+<a href="index.html" class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-gold flex items-center justify-center">
+<span class="text-ink font-bold text-xs">ATC</span>
+</div>
+<span class="font-display text-sm font-semibold tracking-wide text-warm">Ajay Trading Co.</span>
+</a>
+<div class="flex items-center gap-3">
+<button class="text-warm hover:text-gold transition-colors p-1" aria-label="Search">
+<span class="material-symbols-outlined text-xl">search</span>
+</button>
+<a href="cart.html" class="relative text-warm hover:text-gold transition-colors p-1" aria-label="Cart">
+<span class="material-symbols-outlined text-xl">shopping_cart</span>
+<span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-brand text-white text-[10px] font-bold rounded-full flex items-center justify-center">2</span>
+</a>
+</div>
+</div>
+</header>
+
+<main class="max-w-lg mx-auto pt-14">
+
+<!-- HERO -->
+<section id="hero" class="brand-hero-hitachi relative min-h-[480px] flex flex-col justify-end overflow-hidden">
+<img id="heroImg" src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&q=80" alt="Hitachi appliances" class="parallax-img absolute inset-0 w-full h-full object-cover opacity-40">
+<div class="hero-gradient absolute inset-0"></div>
+<div class="relative z-10 px-5 pb-8 pt-24">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brandlight border border-brand/20 mb-4">
+<div class="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></div>
+<span class="text-xs font-medium text-brand">Authorized Partner</span>
+</div>
+<h1 class="font-display text-[32px] leading-tight font-semibold text-warm mb-3">Technology that<br><span class="text-gold">understands you.</span></h1>
+<p class="text-muted text-sm leading-relaxed max-w-xs mb-5">Hitachi ACs, refrigerators & washing machines — with free installation, brand warranty & EMI.</p>
+<div class="flex items-center gap-2">
+<a href="#products" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-ink font-semibold text-sm rounded-lg hover:bg-warm transition-colors">
+<span>Explore Products</span>
+<span class="material-symbols-outlined text-base">arrow_downward</span>
+</a>
+<a href="tel:+919710158619" class="inline-flex items-center gap-2 px-4 py-2.5 border border-warm/20 text-warm text-sm rounded-lg hover:border-gold hover:text-gold transition-colors">
+<span class="material-symbols-outlined text-base">phone</span>
+<span>Call Now</span>
+</a>
+</div>
+</div>
+</section>
+
+<!-- BRAND STORY -->
+<section class="px-5 py-10 scroll-reveal">
+<div class="gold-line mb-4"></div>
+<h2 class="font-display text-2xl font-semibold text-warm mb-3">A Century of Innovation</h2>
+<p class="text-muted text-sm leading-relaxed mb-6">Since 1910, Hitachi has shaped the future of home technology. From Japan's first electric refrigerator to the iSense intelligent cooling system, Hitachi products are engineered to anticipate your needs before you do.</p>
+<div class="grid grid-cols-3 gap-3">
+<div class="bg-inklight rounded-xl p-4 text-center border border-warm/5">
+<div class="font-display text-2xl font-semibold text-gold mb-1">110+</div>
+<div class="text-xs text-muted">Years</div>
+</div>
+<div class="bg-inklight rounded-xl p-4 text-center border border-warm/5">
+<div class="font-display text-2xl font-semibold text-gold mb-1">30K+</div>
+<div class="text-xs text-muted">Installs</div>
+</div>
+<div class="bg-inklight rounded-xl p-4 text-center border border-warm/5">
+<div class="font-display text-2xl font-semibold text-gold mb-1">4.7<span class="text-sm">★</span></div>
+<div class="text-xs text-muted">Rating</div>
+</div>
+</div>
+</section>
+
+<!-- TECH HIGHLIGHTS -->
+<section class="px-5 pb-8 scroll-reveal">
+<h3 class="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Technology Highlights</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="tech-card bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-brand">sensors</span>
+</div>
+<h4 class="text-sm font-semibold text-warm mb-1">iSense Technology</h4>
+<p class="text-xs text-muted leading-relaxed">Auto-detects room conditions</p>
+</div>
+<div class="tech-card bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-brand">ac_unit</span>
+</div>
+<h4 class="text-sm font-semibold text-warm mb-1">Tropical Inverter</h4>
+<p class="text-xs text-muted leading-relaxed">Optimized for 52°C+ heat</p>
+</div>
+<div class="tech-card bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-brand">energy_savings_leaf</span>
+</div>
+<h4 class="text-sm font-semibold text-warm mb-1">Frost Recycle</h4>
+<p class="text-xs text-muted leading-relaxed">Energy-efficient defrost</p>
+</div>
+<div class="tech-card bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-brand">person_alert</span>
+</div>
+<h4 class="text-sm font-semibold text-warm mb-1">Dual Sensor</h4>
+<p class="text-xs text-muted leading-relaxed">Detects human activity</p>
+</div>
+</div>
+</section>
+
+<!-- CATEGORY FILTER PILLS -->
+<section id="products" class="px-5 pb-4">
+<h3 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Filter by Category</h3>
+<div class="pill-scroll flex gap-2 overflow-x-auto pb-2" id="categoryPills">
+<button class="filter-pill active px-4 py-2 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warm" data-category="all">All</button>
+<button class="filter-pill px-4 py-2 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-category="acs">ACs</button>
+<button class="filter-pill px-4 py-2 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-category="refrigerators">Refrigerators</button>
+<button class="filter-pill px-4 py-2 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-category="washing">Washing Machines</button>
+<button class="filter-pill px-4 py-2 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-category="tvs">TVs</button>
+</div>
+</section>
+
+<!-- PRICE RANGE FILTER -->
+<section class="px-5 pb-4">
+<h3 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Price Range</h3>
+<div class="flex gap-2 flex-wrap" id="pricePills">
+<button class="pill px-3 py-1.5 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-range="all">All Prices</button>
+<button class="pill px-3 py-1.5 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-range="under30">Under ₹30K</button>
+<button class="pill px-3 py-1.5 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-range="30to50">₹30K – ₹50K</button>
+<button class="pill px-3 py-1.5 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-range="50to1l">₹50K – ₹1L</button>
+<button class="pill px-3 py-1.5 rounded-full text-xs font-medium bg-inksub border border-warm/10 text-warmdim" data-range="above1l">Above ₹1L</button>
+</div>
+</section>
+
+<!-- STICKY FILTER/SORT BAR -->
+<div id="stickyBar" class="sticky top-14 z-40 bg-ink/95 backdrop-blur-md border-y border-warm/5 px-5 py-3 flex items-center justify-between">
+<div class="text-xs text-muted"><span class="text-warm font-medium" id="productCount">8</span> products</div>
+<select id="sortSelect" class="sort-select text-xs">
+<option value="featured">Featured</option>
+<option value="price-low">Price: Low to High</option>
+<option value="price-high">Price: High to Low</option>
+<option value="discount">Biggest Discount</option>
+</select>
+</div>
+
+<!-- PRODUCT GRID -->
+<section class="px-5 py-5">
+<div class="grid grid-cols-2 gap-3" id="productGrid">
+
+<!-- Product 1 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="acs" data-price="41990" data-discount="21">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=400&q=80" alt="Hitachi 1.5 Ton AC" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">21% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Air Conditioner</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Hitachi 1.5 Ton 5 Star Inverter AC</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹41,990</span>
+<span class="text-[10px] text-muted line-through">₹52,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹3,499/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="1" data-name="Hitachi 1.5 Ton 5 Star Inverter AC" data-price="41990" data-category="acs" data-img="https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="acs" data-price="29990" data-discount="21">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1631545308772-81a0e0a3a6eb?w=400&q=80" alt="Hitachi 1 Ton AC" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">21% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Air Conditioner</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Hitachi 1 Ton 3 Star Split AC</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹29,990</span>
+<span class="text-[10px] text-muted line-through">₹37,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹2,499/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="2" data-name="Hitachi 1 Ton 3 Star Split AC" data-price="29990" data-category="acs" data-img="https://images.unsplash.com/photo-1631545308772-81a0e0a3a6eb?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 3 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="refrigerators" data-price="42990" data-discount="22">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1571175443880-49e1d58b79a6?w=400&q=80" alt="Hitachi 451L Fridge" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">22% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Refrigerator</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Hitachi 451L Frost Free Fridge</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹42,990</span>
+<span class="text-[10px] text-muted line-through">₹54,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹3,583/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="3" data-name="Hitachi 451L Frost Free Fridge" data-price="42990" data-category="refrigerators" data-img="https://images.unsplash.com/photo-1571175443880-49e1d58b79a6?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 4 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="refrigerators" data-price="32990" data-discount="21">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80" alt="Hitachi 320L Fridge" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">21% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Refrigerator</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Hitachi 320L Double Door Fridge</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹32,990</span>
+<span class="text-[10px] text-muted line-through">₹41,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹2,749/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="4" data-name="Hitachi 320L Double Door Fridge" data-price="32990" data-category="refrigerators" data-img="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 5 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="washing" data-price="28990" data-discount="22">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400&q=80" alt="Hitachi Front Load" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">22% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Washing Machine</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Hitachi 7kg Front Load Washer</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹28,990</span>
+<span class="text-[10px] text-muted line-through">₹36,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹2,416/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="5" data-name="Hitachi 7kg Front Load Washer" data-price="28990" data-category="washing" data-img="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 6 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="washing" data-price="22990" data-discount="21">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=400&q=80" alt="Hitachi Top Load" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">21% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Washing Machine</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Hitachi 8kg Top Load Washer</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹22,990</span>
+<span class="text-[10px] text-muted line-through">₹28,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹1,916/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="6" data-name="Hitachi 8kg Top Load Washer" data-price="22990" data-category="washing" data-img="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 7 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="acs" data-price="46990" data-discount="20">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1617103996702-96ff29b1c467?w=400&q=80" alt="Hitachi 2 Ton AC" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">20% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Air Conditioner</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Hitachi 2 Ton 3 Star Split AC</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹46,990</span>
+<span class="text-[10px] text-muted line-through">₹58,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹3,916/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="7" data-name="Hitachi 2 Ton 3 Star Split AC" data-price="46990" data-category="acs" data-img="https://images.unsplash.com/photo-1617103996702-96ff29b1c467?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+<!-- Product 8 -->
+<div class="product-card visible bg-inklight rounded-xl border border-warm/5 overflow-hidden card-hover" data-category="tvs" data-price="24990" data-discount="22">
+<a href="pdp.html" class="block">
+<div class="relative aspect-square bg-inksub overflow-hidden">
+<img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&q=80" alt="Hitachi 43 TV" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<span class="absolute top-2 left-2 px-2 py-0.5 bg-brand text-white text-[10px] font-bold rounded">22% OFF</span>
+</div>
+</a>
+<div class="p-3">
+<div class="text-[10px] text-muted uppercase tracking-wide mb-1">Television</div>
+<h4 class="text-xs font-medium text-warm leading-snug mb-2 line-clamp-2">Hitachi 43" 4K Smart TV</h4>
+<div class="flex items-baseline gap-1.5 mb-1">
+<span class="text-sm font-bold text-gold">₹24,990</span>
+<span class="text-[10px] text-muted line-through">₹31,990</span>
+</div>
+<div class="text-[10px] text-success mb-2">EMI ₹2,083/mo</div>
+<label class="flex items-center gap-2 cursor-pointer mt-2 pt-2 border-t border-warm/5">
+<input type="checkbox" class="compare-check" data-id="8" data-name="Hitachi 43\" 4K Smart TV" data-price="24990" data-category="tvs" data-img="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&q=80">
+<span class="text-[10px] text-muted">Compare</span>
+</label>
+</div>
+</div>
+
+</div>
+<div id="noResults" class="hidden text-center py-12">
+<span class="material-symbols-outlined text-4xl text-muted mb-3">search_off</span>
+<p class="text-sm text-muted">No products match your filters.</p>
+<button onclick="resetFilters()" class="mt-3 text-xs text-gold underline">Reset filters</button>
+</div>
+</section>
+
+<!-- PERSONALIZED HELP -->
+<section class="px-5 py-6 scroll-reveal">
+<div class="bg-gradient-to-br from-brand/10 to-inksub rounded-2xl p-5 border border-brand/10">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-brand/15 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-brand text-2xl">chat</span>
+</div>
+<div>
+<h3 class="font-display text-lg font-semibold text-warm mb-1">Not sure which one?</h3>
+<p class="text-xs text-muted leading-relaxed mb-3">Our appliance experts will help you choose the perfect Hitachi product for your home and budget.</p>
+<a href="https://wa.me/919710158619" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-success text-ink font-semibold text-xs rounded-lg hover:bg-success/90 transition-colors">
+<span class="material-symbols-outlined text-sm">chat</span>
+<span>Chat on WhatsApp</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- TRUST SECTION -->
+<section class="px-5 py-8 scroll-reveal">
+<h3 class="font-display text-xl font-semibold text-warm mb-5 text-center">The ATC Difference</h3>
+<div class="space-y-3">
+<div class="flex items-start gap-4 bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-gold">verified</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-warm mb-1">Authorized Dealer</h4>
+<p class="text-xs text-muted leading-relaxed">Genuine Hitachi products with full manufacturer warranty and GST invoice.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-gold">local_shipping</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-warm mb-1">Free Installation</h4>
+<p class="text-xs text-muted leading-relaxed">Complimentary installation by brand-certified technicians across Delhi NCR.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 bg-inklight rounded-xl p-4 border border-warm/5">
+<div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-gold">credit_card</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-warm mb-1">Easy EMI & Exchange</h4>
+<p class="text-xs text-muted leading-relaxed">Zero-cost EMI options and attractive exchange value on your old appliance.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="px-5 py-8 border-t border-warm/5">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-8 h-8 rounded-full bg-gold flex items-center justify-center">
+<span class="text-ink font-bold text-xs">ATC</span>
+</div>
+<span class="font-display text-sm font-semibold tracking-wide text-warm">Ajay Trading Co.</span>
+</div>
+<p class="text-[11px] text-muted leading-relaxed mb-3">Premium home appliances retailer in Delhi NCR since 1995. Authorised dealer for Hitachi, LG, Daikin, Voltas & more.</p>
+<div class="text-[10px] text-muted/60 border-t border-warm/5 pt-3">
+© 2024 Ajay Trading Co. All rights reserved.<br>
+Hitachi is a registered trademark of Hitachi, Ltd. This is an independent authorized dealer page.
+</div>
+</footer>
+
+<!-- Spacer for bottom nav -->
+<div class="h-20"></div>
+</main>
+
+<!-- COMPARE FLOATING BAR -->
+<div id="compareBar" class="compare-bar fixed bottom-20 left-0 right-0 z-50 px-4">
+<div class="max-w-lg mx-auto bg-inklight border border-gold/20 rounded-xl p-3 shadow-2xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2" id="compareThumbs"></div>
+<span class="text-xs text-muted"><span id="compareCount" class="text-warm font-semibold">0</span>/4 selected</span>
+</div>
+<div class="flex items-center gap-2">
+<button onclick="clearCompare()" class="text-[11px] text-muted hover:text-warm transition-colors px-2 py-1">Clear</button>
+<button onclick="openCompareModal()" class="px-4 py-2 bg-gold text-ink text-xs font-semibold rounded-lg hover:bg-warm transition-colors">Compare</button>
+</div>
+</div>
+</div>
+
+<!-- COMPARE MODAL -->
+<div id="compareModal" class="modal fixed inset-0 z-[60] flex items-end justify-center">
+<div class="absolute inset-0 bg-ink/90 backdrop-blur-sm" onclick="closeCompareModal()"></div>
+<div class="modal-content relative bg-inklight w-full max-w-lg rounded-t-2xl border-t border-gold/20 max-h-[85vh] overflow-auto">
+<div class="sticky top-0 bg-inklight z-10 px-5 py-4 border-b border-warm/5 flex items-center justify-between">
+<h3 class="font-display text-lg font-semibold text-warm">Compare Products</h3>
+<button onclick="closeCompareModal()" class="text-muted hover:text-warm">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div id="compareBody" class="p-5 overflow-x-auto">
+<table class="w-full text-xs">
+<thead><tr id="compareHead"></tr></thead>
+<tbody id="compareRows"></tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-inklight/95 backdrop-blur-xl border-t border-warm/5">
+<div class="max-w-lg mx-auto h-16 flex items-center justify-around px-2">
+<a href="index.html" class="nav-item flex flex-col items-center gap-0.5 p-2 text-muted hover:text-warm transition-colors">
+<span class="material-symbols-outlined text-xl">home</span>
+<span class="text-[10px]">Home</span>
+</a>
+<a href="brand.html" class="nav-item active flex flex-col items-center gap-0.5 p-2 text-gold">
+<span class="material-symbols-outlined text-xl">apartment</span>
+<span class="text-[10px]">Brands</span>
+</a>
+<a href="https://wa.me/919710158619" target="_blank" class="whatsapp-btn -mt-5 w-12 h-12 rounded-full bg-success flex items-center justify-center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.6 6.3A7.5 7.5 0 0 0 12 4a7.5 7.5 0 0 0-6.3 11.6L4 20l4.5-1.2A7.5 7.5 0 0 0 20 12a7.5 7.5 0 0 0-2.4-5.7zM12 17.5c-3 0-5.5-2.5-5.5-5.5S9 6.5 12 6.5s5.5 2.5 5.5 5.5-2.5 5.5-5.5 5.5z"/></svg>
+</a>
+<a href="cart.html" class="nav-item flex flex-col items-center gap-0.5 p-2 text-muted hover:text-warm transition-colors relative">
+<span class="material-symbols-outlined text-xl">shopping_cart</span>
+<span class="text-[10px]">Cart</span>
+<span class="absolute top-1 right-1 w-3 h-3 bg-brand rounded-full"></span>
+</a>
+<a href="account.html" class="nav-item flex flex-col items-center gap-0.5 p-2 text-muted hover:text-warm transition-colors">
+<span class="material-symbols-outlined text-xl">person</span>
+<span class="text-[10px]">Account</span>
+</a>
+</div>
+</nav>
+
+<script>
+// ===== STATE =====
+let activeCategory='all', activePrice='all', activeSort='featured';
+let compareList=[];
+
+// ===== HEADER SHADOW =====
+const header=document.getElementById('mainHeader');
+window.addEventListener('scroll',()=>{header.classList.toggle('shadow-lg',window.scrollY>20);},{passive:true});
+
+// ===== PARALLAX =====
+const heroImg=document.getElementById('heroImg');
+window.addEventListener('scroll',()=>{if(heroImg){heroImg.style.transform=`translateY(${window.scrollY*0.25}px)`;}},{passive:true});
+
+// ===== SCROLL REVEAL =====
+const revealEls=document.querySelectorAll('.scroll-reveal');
+const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:0.12});
+revealEls.forEach(el=>revealObs.observe(el));
+
+// ===== CATEGORY FILTER =====
+document.getElementById('categoryPills').addEventListener('click',e=>{
+const btn=e.target.closest('.filter-pill');if(!btn)return;
+document.querySelectorAll('#categoryPills .filter-pill').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');activeCategory=btn.dataset.category;applyFilters();
+});
+
+// ===== PRICE FILTER =====
+document.getElementById('pricePills').addEventListener('click',e=>{
+const btn=e.target.closest('.pill');if(!btn)return;
+document.querySelectorAll('#pricePills .pill').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');activePrice=btn.dataset.range;applyFilters();
+});
+
+// ===== SORT =====
+document.getElementById('sortSelect').addEventListener('change',e=>{activeSort=e.target.value;applyFilters();});
+
+function applyFilters(){
+const cards=Array.from(document.querySelectorAll('#productGrid .product-card'));
+let visible=0;
+cards.forEach(card=>{
+const cat=card.dataset.category;
+const price=parseInt(card.dataset.price);
+let showCat=activeCategory==='all'||cat===activeCategory;
+let showPrice=true;
+if(activePrice==='under30')showPrice=price<30000;
+else if(activePrice==='30to50')showPrice=price>=30000&&price<50000;
+else if(activePrice==='50to1l')showPrice=price>=50000&&price<=100000;
+else if(activePrice==='above1l')showPrice=price>100000;
+if(showCat&&showPrice){card.classList.remove('hidden');card.classList.add('visible');visible++;}else{card.classList.add('hidden');card.classList.remove('visible');}
+});
+// sort visible
+const grid=document.getElementById('productGrid');
+const visibleCards=cards.filter(c=>!c.classList.contains('hidden'));
+if(activeSort==='price-low')visibleCards.sort((a,b)=>parseInt(a.dataset.price)-parseInt(b.dataset.price));
+else if(activeSort==='price-high')visibleCards.sort((a,b)=>parseInt(b.dataset.price)-parseInt(a.dataset.price));
+else if(activeSort==='discount')visibleCards.sort((a,b)=>parseInt(b.dataset.discount)-parseInt(a.dataset.discount));
+visibleCards.forEach(c=>grid.appendChild(c));
+document.getElementById('productCount').textContent=visible;
+document.getElementById('noResults').classList.toggle('hidden',visible>0);
+}
+
+function resetFilters(){
+activeCategory='all';activePrice='all';activeSort='featured';
+document.querySelectorAll('#categoryPills .filter-pill').forEach(b=>b.classList.toggle('active',b.dataset.category==='all'));
+document.querySelectorAll('#pricePills .pill').forEach(b=>b.classList.toggle('active',b.dataset.range==='all'));
+document.getElementById('sortSelect').value='featured';
+applyFilters();
+}
+
+// ===== COMPARE =====
+document.getElementById('productGrid').addEventListener('change',e=>{
+if(!e.target.classList.contains('compare-check'))return;
+const cb=e.target;
+const item={id:cb.dataset.id,name:cb.dataset.name,price:cb.dataset.price,category:cb.dataset.category,img:cb.dataset.img};
+if(cb.checked){if(compareList.length>=4){cb.checked=false;alert('Compare up to 4 products only.');return;}compareList.push(item);}
+else{compareList=compareList.filter(x=>x.id!==item.id);}
+updateCompareBar();
+});
+
+function updateCompareBar(){
+const bar=document.getElementById('compareBar');
+const thumbs=document.getElementById('compareThumbs');
+const count=document.getElementById('compareCount');
+count.textContent=compareList.length;
+thumbs.innerHTML=compareList.map((x,i)=>`<img src="${x.img}" class="w-8 h-8 rounded-full object-cover border-2 border-inklight" style="z-index:${10-i}">`).join('');
+bar.classList.toggle('show',compareList.length>0);
+}
+
+function clearCompare(){
+compareList=[];
+document.querySelectorAll('.compare-check').forEach(cb=>cb.checked=false);
+updateCompareBar();
+}
+
+function openCompareModal(){
+const modal=document.getElementById('compareModal');
+const head=document.getElementById('compareHead');
+const rows=document.getElementById('compareRows');
+head.innerHTML='<th class="text-left text-muted pb-3 font-normal">Feature</th>'+compareList.map(x=>`<th class="pb-3 text-center font-medium text-warm"><img src="${x.img}" class="w-16 h-16 object-cover rounded-lg mx-auto mb-2"><div class="text-[11px] leading-tight">${x.name}</div></th>`).join('');
+const cats=compareList.map(x=>x.category==='acs'?'Air Conditioner':x.category==='refrigerators'?'Refrigerator':x.category==='washing'?'Washing Machine':x.category==='tvs'?'Television':'Appliance');
+const features=[
+['Category',...cats],
+['Price',...compareList.map(x=>'<span class="text-gold font-semibold">₹'+parseInt(x.price).toLocaleString('en-IN')+'</span>')],
+['Warranty',['1 Year','1 Year','1 Year','1 Year','1 Year','1 Year','1 Year','1 Year'].slice(0,compareList.length)],
+['Installation',['Free','Free','Free','Free','Free','Free','Free','Free'].slice(0,compareList.length)),
+['EMI Available',['Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes'].slice(0,compareList.length))
+];
+rows.innerHTML=features.map(f=>`<tr class="border-t border-warm/5"><td class="py-3 text-muted">${f[0]}</td>${f.slice(1).map(v=>`<td class="py-3 text-center text-warm">${v}</td>`).join('')}</tr>`).join('')+'<tr class="border-t border-warm/5"><td class="py-3"></td>'+compareList.map(()=>`<td class="py-3 text-center"><button class="px-3 py-1.5 bg-gold text-ink text-[10px] font-semibold rounded">Buy Now</button></td>`).join('')+'</tr>';
+modal.classList.add('open');
+document.body.style.overflow='hidden';
+}
+
+function closeCompareModal(){
+const modal=document.getElementById('compareModal');
+modal.classList.remove('open');
+document.body.style.overflow='';
+}
+
+// ===== STICKY BAR OBSERVER =====
+const stickyBar=document.getElementById('stickyBar');
+const prodSection=document.getElementById('products');
+if(stickyBar&&prodSection){
+const stickyObs=new IntersectionObserver(([entry])=>{stickyBar.style.boxShadow=entry.boundingClientRect.top<60?'0 4px 20px rgba(0,0,0,0.3)':'none';},{threshold:[0]});
+stickyObs.observe(prodSection);
+}
+</script>
+</body>
+</html>
