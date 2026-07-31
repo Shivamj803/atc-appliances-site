@@ -1,0 +1,227 @@
+
+    :root {
+      --ink: #0C0C0E;
+      --inklight: #141416;
+      --inksub: #1C1C1F;
+      --warm: #F5F0E8;
+      --warmdim: #D4CFC7;
+      --muted: #8A8A8E;
+      --gold: #C9A84C;
+      --golddim: #8B7340;
+      --success: #4ADE80;
+      --danger: #EF4444;
+    }
+
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--ink);
+      color: var(--warm);
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Glass nav */
+    .nav-glass {
+      background: rgba(12, 12, 14, 0.82);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+    }
+
+    /* Hide scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero parallax */
+    .hero-bg {
+      will-change: transform;
+    }
+
+    /* Snap scroll for pills */
+    .snap-x-mandatory {
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .snap-start {
+      scroll-snap-align: start;
+    }
+
+    /* Sticky filter bar */
+    .sticky-filter {
+      position: sticky;
+      top: 56px;
+      z-index: 40;
+    }
+
+    /* Gold shimmer for CTA */
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .gold-shimmer {
+      background: linear-gradient(90deg, var(--gold) 0%, #E8D5A3 50%, var(--gold) 100%);
+      background-size: 200% auto;
+      animation: shimmer 3s linear infinite;
+    }
+
+    /* WhatsApp pulse */
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5); }
+      50% { box-shadow: 0 0 0 12px rgba(74, 222, 128, 0); }
+    }
+    .whatsapp-pulse {
+      animation: pulse-green 2s ease-in-out infinite;
+    }
+
+    /* Compare floating bar */
+    .compare-bar {
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .compare-bar.active {
+      transform: translateY(0);
+    }
+
+    /* Modal backdrop */
+    .modal-backdrop {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-sheet {
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .modal-backdrop.open .modal-sheet {
+      transform: translateY(0);
+    }
+
+    /* Custom checkbox */
+    .compare-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--muted);
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .compare-checkbox:checked {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .compare-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 1px;
+      width: 6px;
+      height: 11px;
+      border: solid var(--ink);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    /* Loader */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .loader {
+      border: 2px solid rgba(201, 168, 76, 0.2);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* Empty state */
+    .empty-state {
+      display: none;
+    }
+    .empty-state.visible {
+      display: flex;
+    }
+
+    /* Product card hover */
+    .product-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Line clamp */
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Price range active */
+    .price-range-btn.active {
+      background: rgba(201, 168, 76, 0.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Sort select styling */
+    .sort-select {
+      background: var(--inklight);
+      color: var(--warm);
+      border: 1px solid rgba(245, 240, 232, 0.1);
+      border-radius: 8px;
+      padding: 6px 28px 6px 12px;
+      font-size: 13px;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238A8A8E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 14px;
+    }
+  
